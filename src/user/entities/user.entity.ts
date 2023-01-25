@@ -21,11 +21,15 @@ export class User extends BaseEntity {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ unique: true })
   username: string;
 
-  @Column()
-  role: string;
+  @Column({
+    type: 'set',
+    enum: ['admin', 'editor', 'guest'],
+    default: ['guest'],
+  })
+  roles: string;
 
   @Column()
   @CreateDateColumn()
@@ -37,11 +41,14 @@ export class User extends BaseEntity {
 
   @BeforeInsert()
   async hashPassword() {
+    // @todo move salt to config
     const SALT = 8;
+
     this.password = await bcrypt.hash(this.password, SALT);
   }
 
-  async validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
-  }
+  // @todo implement this
+  // async validatePassword(password: string): Promise<boolean> {
+  //   return bcrypt.compare(password, this.password);
+  // }
 }

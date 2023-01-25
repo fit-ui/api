@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-import { User } from '../../users/entities/user.entity';
+import { User } from '../../user/entities/user.entity';
 
 const entities = [User];
 
