@@ -20,8 +20,6 @@ export class UserService {
 
     await user.save();
 
-    delete user.password;
-
     return user;
   }
 

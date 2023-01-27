@@ -7,18 +7,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-
+import { Exclude } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
 
 @Entity()
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
+  @Exclude()
   id: number;
 
   @Column({ unique: true })
   email: string;
 
   @Column()
+  @Exclude()
   password: string;
 
   @Column({ unique: true })
@@ -32,10 +34,12 @@ export class UserEntity extends BaseEntity {
   roles: string[];
 
   @Column()
+  @Exclude()
   @CreateDateColumn()
   createdAt: Date;
 
   @Column()
+  @Exclude()
   @UpdateDateColumn()
   updatedAt: Date;
 
