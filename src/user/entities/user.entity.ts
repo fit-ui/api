@@ -11,7 +11,7 @@ import {
 import * as bcrypt from 'bcryptjs';
 
 @Entity()
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -29,7 +29,7 @@ export class User extends BaseEntity {
     enum: ['admin', 'editor', 'guest'],
     default: ['guest'],
   })
-  roles: string;
+  roles: string[];
 
   @Column()
   @CreateDateColumn()

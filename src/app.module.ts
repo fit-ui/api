@@ -3,7 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { MySqlConfigModule } from './config/database/config.module';
-import { MySqlConfigService } from './config/database/config.service';
+import { MySqlConfigService } from './config/database/service/config.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 

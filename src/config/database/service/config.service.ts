@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
-import { User } from '../../user/entities/user.entity';
+import { UserEntity } from '../../../user/entities/user.entity';
 
-const entities = [User];
+const entities = [UserEntity];
 
 @Injectable()
 export class MySqlConfigService implements TypeOrmOptionsFactory {
