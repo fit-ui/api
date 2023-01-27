@@ -6,12 +6,14 @@ import { MySqlConfigModule } from './config/database/config.module';
 import { MySqlConfigService } from './config/database/service/config.service';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { envValidationSchema as validationSchema } from './validation/env.validation';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env.production', '.env'],
+      validationSchema,
     }),
     TypeOrmModule.forRootAsync({
       imports: [MySqlConfigModule],
