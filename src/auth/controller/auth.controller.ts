@@ -1,14 +1,22 @@
-import { Controller, Request, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  ClassSerializerInterceptor,
+  Controller,
+  Request,
+  Get,
+  Post,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 
 import { LocalAuthGuard } from '../guard/local.auth.guard';
 import { AuthGuard } from '../guard/auth.guard';
 
 @Controller('auth')
+@UseInterceptors(ClassSerializerInterceptor)
 export class AuthController {
-  // @todo example of how to use the LocalAuthGuard
   @UseGuards(LocalAuthGuard)
   @Post('/login')
-  async login(@Request() req) {
+  login(@Request() req) {
     return req.user;
   }
 

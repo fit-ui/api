@@ -1,13 +1,8 @@
-import { IsEmail, MinLength, MaxLength } from 'class-validator';
+import { MinLength, MaxLength } from 'class-validator';
 
-export class CreateUserDto {
-  @IsEmail()
-  email: string;
+import { LoginUserDto } from './login.user.dto';
 
-  @MinLength(8)
-  @MaxLength(16)
-  password: string;
-
+export class CreateUserDto extends LoginUserDto {
   @MinLength(2)
   @MaxLength(10)
   username: string;
