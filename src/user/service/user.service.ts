@@ -19,14 +19,12 @@ export class UserService {
       throw new ConflictException('User already exists');
     }
 
-    const user = this.userRepository.create(createUserDto);
+    const newUser = this.userRepository.create({ ...createUserDto });
 
-    await user.save();
-
-    return user;
+    return this.userRepository.save(newUser);
   }
 
-  async findUserByUniqueProperty({ email, username }) {
+  findUserByUniqueProperty({ email, username }) {
     return this.userRepository.findOne({
       where: [
         {
@@ -39,7 +37,7 @@ export class UserService {
     });
   }
 
-  async findUserByEmail({ email }) {
+  findUserByEmail({ email }) {
     return this.userRepository.findOne({
       where: {
         email,
