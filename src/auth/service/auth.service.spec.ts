@@ -1,6 +1,7 @@
 import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import * as bcrypt from 'bcryptjs';
 
 import { AuthService } from './auth.service';
 import { LoginUserDto } from '../../user/dto/login.user.dto';
@@ -50,6 +51,33 @@ describe('AuthService', () => {
         await authService.login(loginUserDto);
       }).rejects.toThrowError(new ConflictException('User does not exist'));
     });
-    // @todo add more tests
+
+    it('if the passwords do not match', async () => {
+      jest
+        .spyOn(userService, 'findUserByEmail')
+        .mockReturnValueOnce(
+          Promise.resolve(loginUserDto) as Promise<UserEntity>,
+        );
+
+      const bcryptCompare = jest.fn().mockResolvedValue(false);
+      (bcrypt.compare as jest.Mock) = bcryptCompare;
+
+      await expect(async () => {
+        await authService.login(loginUserDto);
+      }).rejects.toThrowError(new ConflictException('Invalid password'));
+    });
+
+    it('if you log in normally', async () => {
+      jest
+        .spyOn(userService, 'findUserByEmail')
+        .mockReturnValueOnce(
+          Promise.resolve(loginUserDto) as Promise<UserEntity>,
+        );
+
+      const bcryptCompare = jest.fn().mockResolvedValue(true);
+      (bcrypt.compare as jest.Mock) = bcryptCompare;
+
+      expect(await authService.login(loginUserDto)).toEqual(loginUserDto);
+    });
   });
 });
